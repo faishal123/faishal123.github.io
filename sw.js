@@ -39,25 +39,25 @@ self.addEventListener('activate', (e) => {
 // 		}),
 // 	);
 // });
-self.addEventListener('fetch', (e) => {
-	console.log('Service Worker: Fetching', e.request.url);
-	if (!(e.request.url.indexOf('http') === 0)) return;
+self.addEventListener('fetch', (event) => {
+	console.log('Service Worker: Fetching', event.request.url);
+	if (!(event.request.url.indexOf('http') === 0)) return;
 	console.log(caches);
-	e.respondWith(
-		fetch(e.request)
+	event.respondWith(
+		fetch(event.request)
 			.then((res) => {
 				// Make a copy/clone of the response
 				const resClone = res.clone();
 				// Open cache
 				caches.open(cacheName).then((cache) => {
 					// Add response to the cache
-					cache.put(e.request, resClone);
+					cache.put(event.request, resClone).then(() => { console.log('cache put success') });
 				});
 				return res;
 			})
-			.catch((e) => {
-				console.log('fetch failed', e);
-				return caches.match(e.request).then((res) => res);
+			.catch((err) => {
+				console.log('fetch failed', err);
+				return caches.match(event.request).then((res) => res);
 			}),
 	);
 });
