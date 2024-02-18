@@ -40,8 +40,8 @@ self.addEventListener('activate', (e) => {
 // 	);
 // });
 self.addEventListener('fetch', (e) => {
-	if (!(evt.request.url.indexOf('http') === 0)) return;
 	console.log('Service Worker: Fetching', e.request.url);
+	if (!(e.request.url.indexOf('http') === 0)) return;
 	console.log(caches);
 	e.respondWith(
 		fetch(e.request)
