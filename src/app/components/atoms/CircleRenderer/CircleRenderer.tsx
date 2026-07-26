@@ -13,6 +13,7 @@ const Child = () => {
   const { startInterval } = useSetupInterval();
 
   useEffect(() => {
+    // setTimeout(() => {
     startInterval(() => {
       const containerElement = document
         ? document.getElementById("container")
@@ -26,8 +27,8 @@ const Child = () => {
         const randomVerticalPoint = Math.floor(
           Math.random() * containerElement.clientHeight,
         );
-        // const randomSize = 30;
 
+        // const randomSize = 30;
         const randomSize = Math.floor(
           Math.random() * (maxSize - minSize + 1) + minSize,
         );

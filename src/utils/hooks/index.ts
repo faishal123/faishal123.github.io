@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useCallback, useEffect } from "react";
+import { frame, useSpring } from "motion/react";
+import { useRef, useCallback, useEffect, RefObject } from "react";
 
 export const useSetupTimeout = () => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -68,4 +69,34 @@ export const useSetupInterval = () => {
   }, [stopInterval]);
 
   return { stopInterval, startInterval };
+};
+
+const spring = { damping: 3, stiffness: 50, restDelta: 0.001 };
+
+export const useFollowCursor = (ref: RefObject<HTMLDivElement | null>) => {
+  const x = useSpring(0, spring);
+  const y = useSpring(0, spring);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const handlePointerMove = (event: MouseEvent) => {
+      if (!ref.current) return;
+      const { clientX, clientY } = event;
+      const element = ref.current;
+
+      frame.read(() => {
+        x.set(clientX - element?.offsetLeft - element?.offsetWidth / 2);
+        y.set(clientY - element?.offsetTop - element?.offsetHeight / 2);
+      });
+    };
+
+    window.addEventListener("pointermove", handlePointerMove);
+
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+    };
+  }, []);
+
+  return { x, y };
 };
