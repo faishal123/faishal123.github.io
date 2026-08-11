@@ -70,7 +70,7 @@ export const Circle = ({
   return (
     <motion.div
       ref={circleRef}
-      className={`bg-foreground rounded-full fixed ${styles.circle}`}
+      className={`border-[0.5px] border-foreground rounded-full fixed ${styles.circle}`}
       style={{
         transition:
           "left 500ms ease-in-out, opacity 1000ms ease-in-out, width 300ms ease-in-out, height 300ms ease-in-out",
