@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { Circle } from "../Circle/Circle";
 import { createRoot } from "react-dom/client";
-import { useSetupInterval } from "@/utils/hooks";
+import { useSetupInterval } from "@/utils/hooks/useSetupInterval";
 
 const Child = () => {
   const interval = 250;
@@ -61,7 +61,9 @@ const Child = () => {
 };
 
 const Container = () => {
-  return <div id="container" className="h-screen w-full"></div>;
+  return (
+    <div id="container" className="h-screen w-full fixed left-0 top-0"></div>
+  );
 };
 
 export const CircleRenderer = () => {

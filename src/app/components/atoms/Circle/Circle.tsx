@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./Circle.module.css";
 import * as motion from "motion/react-client";
-import { useSetupTimeout } from "@/utils/hooks";
+import { useSetupTimeout } from "@/utils/hooks/useSetupTimeout";
+import { Button } from "../Button/Button";
 
 export const Circle = ({
   startPosition,
@@ -68,12 +69,12 @@ export const Circle = ({
   }, []);
 
   return (
-    <motion.div
+    <Button
       ref={circleRef}
-      className={`border-[0.5px] border-foreground rounded-full fixed ${styles.circle}`}
+      className={`bg-foreground rounded-full fixed ${styles.circle}`}
       style={{
         transition:
-          "left 500ms ease-in-out, opacity 1000ms ease-in-out, width 300ms ease-in-out, height 300ms ease-in-out",
+          "left 500ms ease-in-out, opacity 1000ms ease-in-out, width 300ms ease-in-out, height 300ms ease-in-out, background-color 300ms ease-in-out",
         width: size,
         height: size,
         opacity,
@@ -94,10 +95,7 @@ export const Circle = ({
         },
       }}
       whileHover={{
-        scale: 1.5,
-      }}
-      whileTap={{
-        scale: 0.8,
+        scale: 2,
       }}
       drag={!!opacity}
       onDragStart={() => {
@@ -109,6 +107,6 @@ export const Circle = ({
       onDragEnd={() => {
         removeCurrentCircle();
       }}
-    ></motion.div>
+    ></Button>
   );
 };
